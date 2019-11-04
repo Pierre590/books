@@ -2,37 +2,22 @@
 <?php ob_start(); ?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-<h1>liste des livres</h1>
-<p>Bienvenue sur la page de la liste des livres</p>
-
-<ul>
-    <?php
-    foreach ($books as $book) {
-        // code
-        ?>
-        <li><?php echo $book['title']; ?></li>
-        <?php
-    }
-    ?>
-</ul>
-
-
-
-
-<pre>
-<?php var_dump($books);?>
-</pre>
+<div class="container">   
+    <h1>liste des livres</h1>
+    <div class="row align-items-end">
+        <?php foreach ($books as $book) { ?>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <img src= "<?php echo $book['imageLink'] ?>" alt="" >
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $book['title']; ?></h5>
+                        <a href="<?php echo $book['link']?>" alt="" class="btn btn-success">Wikipedia</a>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+</div>
 
 <?php $content = ob_get_clean();  
 // entre obstart et obget clean = memoire tampon, mettre le html dedans?>

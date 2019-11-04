@@ -1,0 +1,57 @@
+<?php for ($i=0; $i < 20; $i=$i+3) {
+        ?>    
+            <div class="container">
+                <div class="row align-items-end">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <?php
+                                $firstbook=$books[$i];
+                            ?>    
+                                <img src= "<?php echo $firstbook ['imageLink'] ?>" alt="" >
+                            <div class="card-body">
+                                <?php
+                                    $firstbook=$books[$i];
+                                    echo $firstbook['title'];
+                                ?>
+                                <h5 class="card-title"></h5>
+                                <p class="card-text">Premier livre test</p>
+                                    <a href="<?php echo $firstbook ['link']?>" alt="" class="btn btn-success">Wikipedia</a>       
+                            </div>
+                        </div>
+                    </div>    
+                    <div class="col-md-4">   
+                        <div class="card text-center" style="width:15em;">
+                            <?php
+                                $firstbook=$books[$i+1];
+                            ?>    
+                                <img src= "<?php echo $firstbook ['imageLink'] ?>" alt="" >
+                            <div class="card-body">
+                                <?php
+                                    $firstbook=$books[$i+1];
+                                    echo $firstbook['title'];
+                                ?>
+                                <h5 class="card-title"></h5>
+                                <p class="card-text">Premier livre test</p>
+                                    <a href="<?php echo $firstbook ['link']?>" alt="" class="btn btn-success">Wikipedia</a>
+                        </div> 
+                    </div>    
+                    <div class="col-md-4">        
+                        <div class="card text-center" style="width:15em;">
+                            <?php
+                                $firstbook=$books[$i+2];
+                            ?>    
+                                <img src= "<?php echo $firstbook ['imageLink'] ?>" alt="" >
+                            <div class="card-body">
+                                <?php
+                                    $firstbook=$books[$i+2];
+                                    echo $firstbook['title'];
+                                ?>
+                                <h5 class="card-title"></h5>
+                                <p class="card-text">Premier livre test</p>
+                                    <a href="<?php echo $firstbook ['link']?>" alt="" class="btn btn-success">Wikipedia</a>            
+                        </div>
+                    </div>    
+                </div>       
+            </div>
+            
+        <?php } ?>

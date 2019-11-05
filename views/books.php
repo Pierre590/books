@@ -28,14 +28,14 @@
     <div class="text-white"><h1>liste des livres</h1></div>
     <div class="row">
         <?php foreach ($books as $book) { ?>
-            <div class="col-md-3 mt-5">
+            <div class="col-md-6 mt-5 col-lg-3">
                 <div class="card text-center h-100" style="">
                     <div class="card-image">
-                        <img src= "<?php echo $book['imageLink'] ?>" alt= >
+                        <img src= "<?php echo $book['image'] ?>" alt= >
                     </div>
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $book['title']; ?></h5>
-                        <p class="card-text"><strong>Auteur : </strong><?php echo $book['author']; ?> </p>
+                        <p class="card-text"><strong>Auteur : </strong><?php echo $book['author'] ? $book['author'] : 'Unknown'; ?> </p>
                     </div>       
                         <div class="card-footer text-center">
                             <a href="?action=book&id=<?php echo $book['id']; ?>" alt="" class="btn btn-info">Détails</a>

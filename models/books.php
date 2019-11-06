@@ -8,27 +8,17 @@ function countBooks ()
 {
     $db = dbConnect ();
 
-    $stmt = $db->prepare('SELECT count(*) FROM books');
-
-    $stmt->execute();
-
-    return $stmt->fetchColumn();
+    $bookTotalReq = $db->query('SELECT id FROM books');
+    return $bookTotalReq -> rowCount();
 
 }
 
-function getBooks()
+function getBooks(string $start): array
 {
-    $limit = 8;
-
-    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-
-    $count = countBooks();
-
-    $offset = ($page -1) * $limit;
-
-    var_dump($offset);
-
-    
+   $count = countBooks();
+   global $page;
+   global $limit;
+   $offset = ($page - 1) * $limit;
 
     $db = dbConnect ();
 
@@ -42,8 +32,8 @@ function getBooks()
 
     ');
 
-    $stmt->bindParam (':offset', $offset);
-    $stmt->bindParam (':limit',$limit);
+    $stmt->bindParam (':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindParam (':limit',$limit, PDO::PARAM_INT);
 
     $stmt->execute();
 

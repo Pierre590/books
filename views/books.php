@@ -22,6 +22,11 @@
     font-size: 1.7em;
     font-family: Cursive;
 }
+
+.pagination{
+    margin: 20px;
+
+}
 </style>
 
 <div class="container"> 
@@ -43,6 +48,25 @@
                 </div> 
             </div>
         <?php } ?>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <!--<li class="page-item"><a class="page-link" href="#">1</a></li>-->
+                    <?php for($i=1;$i<=$nbpage;$i++){
+                        if ($i == $page){
+                            echo "<li class='page-item disabled'><a class='page-link' href='#'>".$i."</a></li>";
+                        }
+                        else {
+                            echo "<li class='page-item'><a class='page-link' href='?action=books&page=".$i."'>".$i."</a></li>";  
+                        }
+                    }
+                    ?>
+                </ul>
+            </nav>
+        </div>    
     </div>
 </div>
 

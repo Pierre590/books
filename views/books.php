@@ -1,5 +1,5 @@
 
-<?php $title = "Liste des livres"; ?> 
+<?php $title = "Liste des livres"; ?>
 
 <?php ob_start(); ?>
 
@@ -27,9 +27,11 @@
     margin: 20px;
 
 }
+
+
 </style>
 
-<div class="container"> 
+<div class="container">
     <div class="text-white"><h1>liste des livres</h1></div>
     <div class="row">
         <?php foreach ($books as $book) { ?>
@@ -41,11 +43,11 @@
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $book['title']; ?></h5>
                         <p class="card-text"><strong>Auteur : </strong><?php echo $book['author'] ? $book['author'] : 'Unknown'; ?> </p>
-                    </div>       
+                    </div>
                         <div class="card-footer text-center">
                             <a href="?action=book&id=<?php echo $book['id']; ?>" alt="" class="btn btn-info">Détails</a>
                         </div>
-                </div> 
+                </div>
             </div>
         <?php } ?>
     </div>
@@ -60,13 +62,13 @@
                             echo "<li class='page-item disabled'><a class='page-link' href='#'>".$i."</a></li>";
                         }
                         else {
-                            echo "<li class='page-item'><a class='page-link' href='?action=books&page=".$i."'>".$i."</a></li>";  
+                            echo "<li class='page-item'><a class='page-link' href='?action=books&page=".$i."'>".$i."</a></li>";
                         }
                     }
                     ?>
                 </ul>
             </nav>
-        </div>    
+        </div>
     </div>
 </div>
 

@@ -1,26 +1,19 @@
 <?php
 
+
 $db = new PDO ('mysql:host=localhost;dbname=books','root');
 
 $id = isset($_GET['id']) ? (INT) $_GET['id'] : null;
 
-if ($id) {
 
-    $stmt=$db->prepare('SELECT * FROM books WHERE id = :id');
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-    $stmt->execute();
-
-    $book = $stmt->fetch();
-
-
-    echo $id;
-}
 
 $query = $db->query('SELECT * FROM authors order by name');
 $authors = $query->fetchAll(PDO::FETCH_ASSOC);
 
 
 if (isset($_POST ['book'])) {
+
+    $id = isset ($_POST['id']) ? (int) $_POST ['id'] : null;
 
     $title = (string) $_POST['title'];
     $description = (string) $_POST['description'];
@@ -32,9 +25,15 @@ if (isset($_POST ['book'])) {
     $language = (string) $_POST['language'];
 
 
-
-    $stmt = $db -> prepare ('INSERT INTO `books` (`title`, `description`,`author_id`,`pages`, `country`,`wikipedia_link`,`year`,`language`)
-    VALUES (:title,:description,:author_id,:pages,:country,:wikipedia_link,:year,:language)');
+    if ($id) {
+        $stmt = $db->prepare('UPDATE books SET
+            title = :title , description = :description ,pages = :pages, author_id = :author_id, country = :country, wikipedia_link = :wikipedia_link, year = :year ,language = :language
+            WHERE id = :id');
+        $stmt-> bindParam(':id', $id, PDO::PARAM_INT);
+    } else {
+        $stmt = $db -> prepare ('INSERT INTO `books` (`title`, `description`,`author_id`,`pages`, `country`,`wikipedia_link`,`year`,`language`)
+        VALUES (:title,:description,:author_id,:page,:country,:wikipedia_link,:year,:language)');
+    }
 
     $stmt-> bindParam(':title', $title, PDO::PARAM_STR);
     $stmt-> bindParam(':description', $description, PDO::PARAM_STR);
@@ -46,11 +45,22 @@ if (isset($_POST ['book'])) {
     $stmt-> bindParam(':language', $language, PDO::PARAM_STR);
 
     $stmt->execute();
+    if (!$id) {
+        $id = $db->lastInsertId();
+         header('Location:' . $_server['REQUEST_URI'] . '?id=' . $id);
+    }
 
-    $id = $db->lastInsertId();
+}
 
-    var_dump ($id);
-    var_dump($wikipedia_link);
+if ($id) {
+
+    $stmt=$db->prepare('SELECT * FROM books WHERE id = :id');
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $book = $stmt->fetch();
+
+
 
 }
 
@@ -71,10 +81,10 @@ if (isset($_POST ['book'])) {
     <div class="container">
         <div class="row text-info">
             <div class="col-md-12 text-center bg-dark">
-                <h1>Enregistrer un livre</h1>
+                <h1><?php echo !isset ($book) ? "Ajouter un livre" : "Editer : ".$book['title'] ; ?></h1>
             </div>
         </div>
-      <form class="./*" method="post">
+      <form action="./<?php echo isset ($book) ? '?id='.$book ['id']: ''; ?>" method="post">
         <div class="row text-info">
           <div class="col-md-6 bg-dark">
               <div class="form-group">
@@ -99,7 +109,7 @@ if (isset($_POST ['book'])) {
                    </select>
               </div>
               <div class="form-group">
-                <label for="description">Description du livre</label>
+                <label for="description"> Description du livre</label>
                 <textarea name="description" value="<?php echo isset($book) ? $book['description'] :''; ?>"class="form-control" id="description" rows="3"></textarea>
               </div>
               <div class="form-group">
@@ -126,6 +136,7 @@ if (isset($_POST ['book'])) {
                 </div>
             </div>
                 <div class="gr col-md-12 bg-dark">
+                    <input type="hidden" value="<?php echo isset ($book) ? $book ['id'] : ''; ?>" name="id">
                     <button name="book" type="submit" class="btn btn-info btn-lg btn-block">Envoyer</button>
                 </div>
             </div>

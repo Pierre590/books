@@ -3,14 +3,9 @@
 $db = new PDO ('mysql:host=localhost;dbname=books','root');
 
 session_start();
-
-$_session ['id'] = '' ;
-$_session ['name'] = '' ;
-$_session ['password'] = '' ;
-$_session ['email'] = '' ;
-$_session ['pseudo'] = '' ;
-
-
+if ($_SESSION['id']) {
+    session_destroy();
+}
 
 if (isset($_POST ['email'])) {
 
@@ -18,17 +13,22 @@ if (isset($_POST ['email'])) {
     $password =(string) $_POST['password'];
 
     if (filter_var($login,FILTER_VALIDATE_EMAIL) && $password) {
-        $password = password_hash($password, PASSWORD_DEFAULT);
+        /*$password = password_hash($password, PASSWORD_DEFAULT);*/
 
         /*var_dump = password_verfiy ($password,PASSWORD_DEFAULT));*/
         $stmt = $db->prepare('SELECT * FROM users WHERE email = :toto');
         $stmt-> bindParam(':toto', $login, PDO::PARAM_STR);
         $stmt->execute();
 
-
         $user = $stmt->fetch();
 
-        var_dump($user);
+        if($user && password_verify($password, $user['password'])){
+            $_SESSION['id'] = $user['id'];
+            $_SESSION['name'] = $user['name'];
+            header('location: ./profile.php');
+        }
+
+
     }
 
 
@@ -48,7 +48,7 @@ if (isset($_POST ['email'])) {
         <title></title>
     </head>
     <body>
-        <div class="container bg-dark" style="margin-top: 10em">
+        <div class="container bg-dark" style="margin-top:10em">
             <form class="" action="./" method="post">
                 <div class="row">
                     <div class="col-md-12 text-info">
@@ -75,5 +75,5 @@ if (isset($_POST ['email'])) {
 <?php
 
 
-session_destroy();
+
 ?>

@@ -1,4 +1,0 @@
-AuthName "projetbook"
-AuthType Basic
-AuthUserFile "/home/pierre/Documents/project/php/books/admin/.htpasswd"
-Require valid-user

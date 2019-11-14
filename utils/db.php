@@ -1,6 +1,6 @@
 <?php
 
-function dbConnect () 
+function dbConnect ()
 {
-    return new PDO ('mysql:host=localhost;dbname=books','root');
+    return new PDO ('mysql:host=localhost;dbname=books-old','root');
 }

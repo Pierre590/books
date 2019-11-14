@@ -22,11 +22,11 @@ function getBooks(string $start): array
 
     $db = dbConnect ();
 
-    $stmt = $db->prepare('SELECT 
-        books.* , 
-        authors.name AS author 
-        FROM books 
-        LEFT JOIN authors 
+    $stmt = $db->prepare('SELECT
+        books.* ,
+        authors.name AS author
+        FROM books
+        LEFT JOIN authors
         ON books.author_id = authors.id
         LIMIT :offset, :limit
 
@@ -45,21 +45,17 @@ function getbook($id)
     $db = dbConnect ();
 
     $stmt = $db->prepare('SELECT
-    books.* , 
-    authors.name AS author 
-    FROM books 
-    LEFT JOIN authors 
+    books.* ,
+    authors.name AS author
+    FROM books
+    LEFT JOIN authors
     ON books.author_id = authors.id
     WHERE books.id = :id
    ');
     $stmt->bindParam ('id',$id,PDO::PARAM_INT);
 
     $stmt->execute();
-    
+
     return $stmt->fetch();
 
 }
-
-
-
-
